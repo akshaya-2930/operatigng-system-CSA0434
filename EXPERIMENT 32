@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int pages[] = {1,2,3,4,1,2,5};
+    int frames[3] = {-1,-1,-1};
+    int time[3] = {0};
+    int faults = 0, i, j, t = 0, found, lru;
+
+    for(i = 0; i < 7; i++) {
+        found = 0;
+        for(j = 0; j < 3; j++) {
+            if(frames[j] == pages[i]) {
+                found = 1;
+                time[j] = ++t;
+                break;
+            }
+        }
+
+        if(!found) {
+            lru = 0;
+            for(j = 1; j < 3; j++)
+                if(time[j] < time[lru])
+                    lru = j;
+
+            frames[lru] = pages[i];
+            time[lru] = ++t;
+            faults++;
+        }
+    }
+
+    printf("Total Page Faults (LRU): %d\n", faults);
+    return 0;
+}
