@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int req[] = {98,183,37,122,14};
+    int head = 53, seek = 0, i;
+
+    for(i = 0; i < 5; i++) {
+        seek += abs(req[i] - head);
+        head = req[i];
+    }
+
+    printf("Total Seek Time (SCAN): %d\n", seek);
+    return 0;
+}
