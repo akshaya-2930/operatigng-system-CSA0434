@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int main() {
+    int pages[] = {1,2,3,4,1,2,5};
+    int frames[3] = {-1,-1,-1};
+    int faults = 0, i, j, k, farthest, index;
+
+    for(i = 0; i < 7; i++) {
+        int found = 0;
+        for(j = 0; j < 3; j++) {
+            if(frames[j] == pages[i]) {
+                found = 1;
+                break;
+            }
+        }
+
+        if(!found) {
+            farthest = -1;
+            index = 0;
+            for(j = 0; j < 3; j++) {
+                int next = -1;
+                for(k = i+1; k < 7; k++) {
+                    if(frames[j] == pages[k]) {
+                        next = k;
+                        break;
+                    }
+                }
+                if(next == -1) {
+                    index = j;
+                    break;
+                }
+                if(next > farthest) {
+                    farthest = next;
+                    index = j;
+                }
+            }
+            frames[index] = pages[i];
+            faults++;
+        }
+    }
+
+    printf("Total Page Faults (Optimal): %d\n", faults);
+    return 0;
+}
